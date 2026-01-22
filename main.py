@@ -17,7 +17,7 @@ API_KEY = os.environ.get("API_KEY")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
 OAUTH_URL = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&scope=identify%20guilds.join"
-SELF_URL = os.environ.get("SELF_URL", "https://yourapp.onrender.com")
+SELF_URL = os.environ.get("SELF_URL", "https://dashboard-vadriftsrestored.onrender.com")
 
 app = Quart(__name__)
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
