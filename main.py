@@ -9,12 +9,12 @@ from quart import Quart, redirect, request, jsonify, render_template_string
 from discord.ext import commands
 import discord
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_BOT_TOKEN")
-CLIENT_ID = os.environ.get("CLIENT_ID", "YOUR_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("CLIENT_SECRET", "YOUR_CLIENT_SECRET")
-REDIRECT_URI = os.environ.get("REDIRECT_URI", "https://yourapp.onrender.com/callback")
-API_KEY = os.environ.get("API_KEY", "your_secret_api_key_here")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme123")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+CLIENT_ID = os.environ.get("CLIENT_ID")
+CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+REDIRECT_URI = os.environ.get("REDIRECT_URI")
+API_KEY = os.environ.get("API_KEY")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
 OAUTH_URL = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&scope=identify%20guilds.join"
 SELF_URL = os.environ.get("SELF_URL", "https://yourapp.onrender.com")
