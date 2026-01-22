@@ -303,7 +303,7 @@ async def stats(ctx):
     await ctx.reply(f"**{count}** verified members in database for this server")
 
 async def keep_alive():
-    await asyncio.sleep(30)
+    await asyncio.sleep(60)
     async with aiohttp.ClientSession() as session:
         while True:
             try:
@@ -314,7 +314,23 @@ async def keep_alive():
             await asyncio.sleep(720)
 
 async def run_bot():
-    await bot.start(BOT_TOKEN)
+    await asyncio.sleep(5)
+    max_retries = 5
+    for attempt in range(max_retries):
+        try:
+            print(f"[Bot] Starting (attempt {attempt + 1}/{max_retries})...")
+            await bot.start(BOT_TOKEN)
+            break
+        except discord.errors.HTTPException as e:
+            if e.status == 429:
+                retry_after = 30 * (attempt + 1)
+                print(f"[Bot] Rate limited, waiting {retry_after}s...")
+                await asyncio.sleep(retry_after)
+            else:
+                raise
+        except Exception as e:
+            print(f"[Bot] Error: {e}")
+            await asyncio.sleep(10)
 
 async def run_web():
     port = int(os.environ.get("PORT", 5000))
@@ -322,7 +338,8 @@ async def run_web():
 
 async def main():
     init_db()
-    await asyncio.gather(run_bot(), run_web(), keep_alive())
+    print("[Init] Starting services...")
+    await asyncio.gather(run_web(), run_bot(), keep_alive())
 
 if __name__ == "__main__":
     asyncio.run(main())
